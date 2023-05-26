@@ -1,5 +1,6 @@
 package fieldjetx.v2;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -23,8 +24,8 @@ public class Login {
     WebElement usernameLabel;
 
     // Constructor for Login object
-    public Login(ChromeDriver driver) {
-        this.driver = driver;
+    public Login(WebDriver driver) {
+        this.driver = (ChromeDriver) driver;
         PageFactory.initElements(driver, this);
     }
 

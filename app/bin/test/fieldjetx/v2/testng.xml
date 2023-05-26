@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="FieldJetX Test Suite">
+  <test name="Login Test">
+    <classes>
+      <class name="fieldjetx.v2.Testcases.Testcase01"/>
+    </classes>
+  </test>
+</suite>

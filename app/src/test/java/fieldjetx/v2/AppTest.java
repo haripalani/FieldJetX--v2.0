@@ -3,8 +3,92 @@
  */
 package fieldjetx.v2;
 
-import org.testng.annotations.*;
-import static org.testng.Assert.*;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class AppTest {
+ 
+// This method creates a new ChromeDriver instance and returns it.
+private static ChromeDriver createDriver() {
+    // ChromeDriver driver; // Declare a ChromeDriver variable named 'driver'.
+
+    WebDriverManager.chromedriver().setup(); // Set up the ChromeDriver executable path using WebDriverManager.
+
+    // driver = new ChromeDriver(); // Initialize a new ChromeDriver instance and assign it to the 'driver' variable.
+
+    return new ChromeDriver(); // Return the ChromeDriver instance.
+}
+
+
+
+// Define a public method called logStatus that takes in 3 string parameters: type, message, and status.
+public static void logStatus(String type, String message, String status) {
+    // Print the current date and time, type, message, and status in a formatted string.
+    System.out.println(String.format("%s |  %s  |  %s | %s",
+        String.valueOf(java.time.LocalDateTime.now()), type, message, status));
+}
+
+
+// This function runs a test case to check if a user can login and logout successfully
+private static void runTestcase01(ChromeDriver driver) throws InterruptedException{
+    // Create an instance of the Login class and navigate to the login page
+    Login login = new Login(driver);
+    login.navigateToLoginPage();
+
+    // Attempt to login with a specific username and password and assert that the login was successful
+    Boolean status = login.performlogin("brad.marple@climatepros.com", "Cpi584687!");
+    assert status : "Login failed!";
+    logStatus("Test Step", "User Perform Login: ", "PASS");
+
+    // If the login attempt was successful, assert that the test case passed
+    if (status) {
+        assert status : "Verify that user logged in failed!";
+        logStatus("End TestCase", "Test Case 1: Verify that user logged in : ", "PASS");
+    }
+
+    // Wait for 5 seconds before continuing
+    Thread.sleep(5000);
+
+    // Create an instance of the Dispatch class and click on the "Service" button
+    Dispatch dispatch = new Dispatch(driver);
+    dispatch.clickOnService();
+
+    // Create an instance of the Home class and navigate to the home page
+    Home homepage = new Home(driver);
+    homepage.navigateToHome();
+
+    // Attempt to logout and assert that the logout was successful
+    status = homepage.performLogout();
+    assert status : "Logout failed!";
+    if (status) {
+        // If the logout attempt was successful, assert that the test case passed
+        assert status : "Verify that user logged out failed!";
+        logStatus("End TestCase", "Test Case 1: Verify that user logged out : ", "PASS");
+    }
+
+    // Return from the function
+    return;
+}
+
+
+// This is the main method of the program
+public static void main(String[] args) {
+    // Create a new ChromeDriver instance
+    ChromeDriver driver = createDriver();
+    try {
+        // Run the first test case
+        runTestcase01(driver);
+        // If the first test case passed, print a success message
+        System.out.println("Testcase01 Passed");
+    } catch (Exception e) {
+        // If an exception is thrown during the test case, print the stack trace
+        e.printStackTrace();
+    } finally {
+        // Quit the driver regardless of whether the test case passed or failed
+        driver.quit();
+    }
+}
+
+
 }
