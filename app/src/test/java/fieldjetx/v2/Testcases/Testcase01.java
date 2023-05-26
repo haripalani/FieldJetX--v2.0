@@ -56,21 +56,22 @@ public class Testcase01 {
     @DataProvider
     public Iterator<Object[]> getLoginData() throws IOException {
         // Read the data from the Excel sheet
-        FileInputStream fis = new FileInputStream("C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/java/fieldjetx/v2/Data.xlsx");
-        XSSFWorkbook workbook = new XSSFWorkbook(fis);
-        Sheet sheet = workbook.getSheet("login details");
+        FileInputStream fis = new FileInputStream("C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/resources/Data.xlsx");
+        try (XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
+            Sheet sheet = workbook.getSheet("login details");
 
 
-        // Store the data in a List of Object arrays
-        ArrayList<Object[]> loginData = new ArrayList<>();
-        DataFormatter formatter = new DataFormatter();
-        for (Row row : sheet) {
-            String username = formatter.formatCellValue(row.getCell(0));
-            String password = formatter.formatCellValue(row.getCell(1));
-            loginData.add(new Object[]{username, password});
+            // Store the data in a List of Object arrays
+            ArrayList<Object[]> loginData = new ArrayList<>();
+            DataFormatter formatter = new DataFormatter();
+            for (Row row : sheet) {
+                String username = formatter.formatCellValue(row.getCell(0));
+                String password = formatter.formatCellValue(row.getCell(1));
+                loginData.add(new Object[]{username, password});
+            }
+
+            // Return an Iterator over the List of Object arrays
+            return loginData.iterator();
         }
-
-        // Return an Iterator over the List of Object arrays
-        return loginData.iterator();
     }
 }
