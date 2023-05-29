@@ -5,18 +5,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import fieldjetx.v2.Login;
-
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-// import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
+// import java.util.ArrayList;
+// import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -24,15 +20,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Testcase01 {
     private WebDriver driver;
     private Login loginPage;
+    private Object[][] loginData;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setUp() {
         // Set up the driver
-        System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/Java/chromedriver_win32/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver",
+                "C:/Program Files (x86)/Java/chromedriver_win32/chromedriver.exe");
         driver = new ChromeDriver();
 
         // Initialize the Login page
         loginPage = new Login(driver);
+    }
+
+    @BeforeSuite
+    public void loadData() throws IOException {
+        // Call the getLoginData method and store the data in loginData variable
+        loginData = getLoginData();
     }
 
     @AfterClass
@@ -53,25 +57,29 @@ public class Testcase01 {
         Assert.assertTrue(isLoginSuccessful, "Login was not successful.");
     }
 
-    @DataProvider
-    public Iterator<Object[]> getLoginData() throws IOException {
-        // Read the data from the Excel sheet
-        FileInputStream fis = new FileInputStream("C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/resources/Data.xlsx");
-        try (XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
-            Sheet sheet = workbook.getSheet("login details");
+    @DataProvider(name = "getLoginData")
+public static Object[][] getLoginData() throws IOException {
+    // Read the data from the Excel sheet
+    FileInputStream fis = new FileInputStream("C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/resources/Data.xlsx");
+    XSSFWorkbook workbook = new XSSFWorkbook(fis);
+    Sheet sheet = workbook.getSheetAt(0);
 
+    // Get the number of rows in the sheet
+    int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum() + 1;
 
-            // Store the data in a List of Object arrays
-            ArrayList<Object[]> loginData = new ArrayList<>();
-            DataFormatter formatter = new DataFormatter();
-            for (Row row : sheet) {
-                String username = formatter.formatCellValue(row.getCell(0));
-                String password = formatter.formatCellValue(row.getCell(1));
-                loginData.add(new Object[]{username, password});
-            }
+    // Create a 2D object array to store the login data
+    Object[][] loginData = new Object[rowCount][2];
 
-            // Return an Iterator over the List of Object arrays
-            return loginData.iterator();
-        }
+    // Loop through each row and store the username and password in the object array
+    for (int i = 0; i < rowCount; i++) {
+        Row row = sheet.getRow(i);
+        loginData[i][0] = row.getCell(0).getStringCellValue(); // Username is in column A
+        loginData[i][1] = row.getCell(1).getStringCellValue(); // Password is in column B
     }
+
+    // Close the workbook
+    workbook.close();
+    return loginData;
+}
+
 }

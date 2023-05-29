@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import fieldjetx.v2.POM.Constants;
+import fieldjetx.v2.POM.LoginPageLocators;
 
 public class Home {
 
@@ -17,7 +17,7 @@ public class Home {
     //Constructor
     public Home(WebDriver driver) {
         this.driver = driver;
-        this.url = Constants.HOME_PAGE_URL;
+        this.url = "http://18.188.111.206/#/dispatch/search";
     }
 
     public void navigateToHome() {
@@ -35,7 +35,7 @@ public class Home {
     
             confirmBtn.click();
     
-            wait.until(ExpectedConditions.urlToBe(Constants.HOME_PAGE_URL));
+            wait.until(ExpectedConditions.urlToBe("http://18.188.111.206/#/dispatch/search"));
             return true;
         } catch (Exception e) {
             return false;
@@ -43,9 +43,9 @@ public class Home {
     }
     
 
-    @FindBy(xpath = Constants.LOGOUT_BTN_XPATH)
+    @FindBy(xpath = LoginPageLocators.LOGOUT_BTN_XPATH)
     private WebElement logoutBtn;
 
-    @FindBy(xpath = Constants.CONFIRM_BTN_XPATH)
+    @FindBy(xpath = LoginPageLocators.CONFIRM_BTN_XPATH)
     private WebElement confirmBtn;
 }
