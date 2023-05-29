@@ -5,4 +5,9 @@
       <class name="fieldjetx.v2.Testcases.Testcase01"/>
     </classes>
   </test>
+  <test name="Dispatch Test">
+    <classes>
+      <class name="fieldjetx.v2.Testcases.Testcase02"/>
+    </classes>
+  </test>
 </suite>
