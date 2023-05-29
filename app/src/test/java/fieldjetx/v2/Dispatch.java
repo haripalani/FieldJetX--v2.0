@@ -54,4 +54,8 @@ public class Dispatch {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locators.getVerifyingAssignedTech()));
         driver.findElement(locators.getFinalAssignButton()).click();
     }
+
+    public boolean verifyDispatchCreated(String customerName, String customerLocation, String customerClass) {
+        return false;
+    }
 }
