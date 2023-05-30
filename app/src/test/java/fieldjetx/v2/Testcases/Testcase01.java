@@ -18,10 +18,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 // import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+// import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import fieldjetx.v2.Login;
 import fieldjetx.v2.POM.Utility;
@@ -92,11 +91,12 @@ public class Testcase01 {
 
         // Verify that the login was successful
         if (isLoginSuccessful) {
-            test.pass("Login was successful.", MediaEntityBuilder.createScreenCaptureFromBase64String(Utility.captureScreenshot(username, driver)).build());
+            test.pass("Login was successful.");
         } else {
-            test.fail("Login was not successful.", MediaEntityBuilder.createScreenCaptureFromBase64String(Utility.captureScreenshot(username, driver)).build());
+            test.fail("Login was not successful.");
         }
         Assert.assertTrue(isLoginSuccessful, "Login was not successful.");
+        
     }
 
     @DataProvider(name = "getLoginData")
@@ -123,6 +123,7 @@ public class Testcase01 {
         workbook.close();
         return loginData;
     }
+    
 }
 
 
