@@ -7,11 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
+// import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.FileUtils;
+// import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -76,14 +76,22 @@ public class Utility {
         }
     }
 
-    public static String captureScreenshot(WebDriver driver) throws IOException {
-        TakesScreenshot ts = (TakesScreenshot) driver;
-        File source = ts.getScreenshotAs(OutputType.FILE);
-        String dest = "screenshots/" + UUID.randomUUID().toString() + ".png";
-        File destination = new File(dest);
-        FileUtils.copyFile(source, destination);
+    public static String captureScreenshot(String testName, WebDriver driver) throws IOException {
+        // Get the current timestamp
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+        String timestamp = dateFormat.format(new Date());
+    
+        // Create a screenshot file with the test name and timestamp
+        String screenshotName = testName + " " + timestamp + ".png";
+        String dest = "screenshots/" + screenshotName;
+        File screenshotFile = new File(dest);
+    
+        // Take a screenshot and save it to the screenshot file
+        takeScreenshot(screenshotFile, driver);
+    
         return dest;
     }
+    
 
     public static ExtentReports getExtentReport() {
         return extent;

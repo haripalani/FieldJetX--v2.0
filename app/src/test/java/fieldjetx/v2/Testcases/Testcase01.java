@@ -2,6 +2,8 @@ package fieldjetx.v2.Testcases;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Duration;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -59,10 +61,10 @@ public class Testcase01 {
     public void tearDown() {
         // Quit the driver
         driver.quit();
-
+    
         // Generate the report
         extent.flush();
-
+    
         // Get the status of the test suite execution
         if (Reporter.getOutput().contains("FAILURES!!!")) {
             // If any test has failed, set the exit status to 1
@@ -71,7 +73,10 @@ public class Testcase01 {
             // If all tests have passed, set the exit status to 0
             System.exit(0);
         }
+    
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
+    
 
     @Test(dataProvider = "getLoginData", retryAnalyzer = RetryAnalyzer.class)
     public void testLogin(String username, String password) throws InterruptedException, IOException {
@@ -87,9 +92,9 @@ public class Testcase01 {
 
         // Verify that the login was successful
         if (isLoginSuccessful) {
-            test.pass("Login was successful.", MediaEntityBuilder.createScreenCaptureFromPath(Utility.captureScreenshot(driver)).build());
+            test.pass("Login was successful.", MediaEntityBuilder.createScreenCaptureFromBase64String(Utility.captureScreenshot(username, driver)).build());
         } else {
-            test.fail("Login was not successful.", MediaEntityBuilder.createScreenCaptureFromPath(Utility.captureScreenshot(driver)).build());
+            test.fail("Login was not successful.", MediaEntityBuilder.createScreenCaptureFromBase64String(Utility.captureScreenshot(username, driver)).build());
         }
         Assert.assertTrue(isLoginSuccessful, "Login was not successful.");
     }
