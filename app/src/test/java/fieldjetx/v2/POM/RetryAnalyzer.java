@@ -1,4 +1,4 @@
-package fieldjetx.v2.Testcases;
+package fieldjetx.v2.POM;
 
 import java.io.File;
 import java.io.IOException;
