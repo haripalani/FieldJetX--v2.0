@@ -15,20 +15,20 @@ import fieldjetx.v2.POM.LoginPageLocators;
 
 public class Loginactions {
     private WebDriver driver;
-    private String url = "http://18.188.111.206/";
-    @FindBy(xpath = LoginPageLocators.USERNAME_INPUT)
+    private String url = "http://192.168.5.16:8081/";
+    @FindBy(id = LoginPageLocators.USERNAME_INPUT)
     private WebElement username;
     @FindBy(xpath = LoginPageLocators.PASSWORD_INPUT)
     private WebElement password;
-    @FindBy(xpath = LoginPageLocators.LOGIN_BUTTON)
+    @FindBy(id = LoginPageLocators.LOGIN_BUTTON)
     private WebElement loginBtn;
-    @FindBy(xpath = LoginPageLocators.USERNAME_LABEL)
+    @FindBy(id = LoginPageLocators.USERNAME_LABEL)
     private WebElement usernameLabel;
-    @FindBy(xpath = LoginPageLocators.LOGOUT_BTN_XPATH)
+    @FindBy(id = LoginPageLocators.LOGOUT_BTN_XPATH)
     private WebElement logoutBtn;
-    @FindBy(xpath = LoginPageLocators.CONFIRM_BTN_XPATH)
+    @FindBy(id = LoginPageLocators.CONFIRM_BTN_XPATH)
     private WebElement confirmBtn;
-    @FindBy(xpath = LoginPageLocators.LOGIN_PAGE)
+    @FindBy(id = LoginPageLocators.LOGIN_PAGE)
     private WebElement loginPage;
 
     public Loginactions(WebDriver driver) {
