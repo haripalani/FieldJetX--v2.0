@@ -29,16 +29,17 @@ public class Testcase01 {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
-        // Set up the driver
-        System.setProperty("webdriver.chrome.driver",
-                "C:/Program Files (x86)/Java/chromedriver_win32/chromedriver.exe");
-        driver = new ChromeDriver();
+    // Set up the driver
+    System.setProperty("webdriver.chrome.driver", "C:/Program Files (x86)/Java/chromedriver_win32/chromedriver.exe");
 
-        // Initialize the Login, Dispatch and Customer pages
-        loginPage = new Loginactions(driver);
-        dispatchPage = new DispatchCreationflow(driver);
-        
-    }
+    WebDriver driver = new ChromeDriver();
+    driver.manage().window().maximize();
+
+    // Initialize the Login, Dispatch, and Customer pages
+    loginPage = new Loginactions(driver);
+    dispatchPage = new DispatchCreationflow(driver);
+}
+
 
     @BeforeSuite
     public void loadData() throws IOException {
@@ -83,7 +84,8 @@ public class Testcase01 {
     @DataProvider(name = "getLoginData")
     public static Object[][] getLoginData() throws IOException {
         // Read the data from the Excel sheet
-        FileInputStream fis = new FileInputStream("C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/resources/Data.xlsx");
+        FileInputStream fis = new FileInputStream(
+                "C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/resources/Data.xlsx");
         XSSFWorkbook workbook = new XSSFWorkbook(fis);
         Sheet sheet = workbook.getSheetAt(0);
 
@@ -91,42 +93,45 @@ public class Testcase01 {
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum() + 1;
 
         // Create a 2D object array to store the login data
-        Object[][] loginData = new Object[rowCount][2];
+        Object[][] loginData = new Object[rowCount - 1][2];
 
         // Loop through each row and store the login data in the object array
-        for (int i = 0; i < rowCount; i++) {
+        for (int i = 1; i < rowCount; i++) {
             Row row = sheet.getRow(i);
-            loginData[i][0] = row.getCell(0).getStringCellValue(); // Username is in column A
-             loginData[i][1] = row.getCell(1).getStringCellValue(); // Password is in column B
+            loginData[i - 1][0] = row.getCell(0).getStringCellValue(); // Username is in column A
+            loginData[i - 1][1] = row.getCell(1).getStringCellValue(); // Password is in column B
         }
-// Close the workbook
-workbook.close();
-return loginData;
-}
 
-@DataProvider(name = "getDispatchData")
-public static Object[][] getDispatchData() throws IOException {
-// Read the data from the Excel sheet
-FileInputStream fis = new FileInputStream("C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/resources/Data.xlsx");
-XSSFWorkbook workbook = new XSSFWorkbook(fis);
-Sheet sheet = workbook.getSheetAt(1);
+        // Close the workbook
+        workbook.close();
+        return loginData;
+    }
 
-// Get the number of rows in the sheet
-int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum() + 1;
+    @DataProvider(name = "getDispatchData")
+    public static Object[][] getDispatchData() throws IOException {
+        // Read the data from the Excel sheet
+        FileInputStream fis = new FileInputStream(
+                "C:/Users/TLTUser/Desktop/QA Automation/FieldJetX--v2.0/app/src/test/resources/Data.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fis);
+        Sheet sheet = workbook.getSheetAt(1);
 
-// Create a 2D object array to store the dispatch data
-Object[][] dispatchData = new Object[rowCount][3];
+        // Get the number of rows in the sheet
+        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum() + 1;
 
-// Loop through each row and store the dispatch data in the object array
-for (int i = 0; i < rowCount; i++) {
-    Row row = sheet.getRow(i);
-    dispatchData[i][0] = row.getCell(0).getStringCellValue(); // Customer Name is in column A
-    dispatchData[i][1] = row.getCell(1).getStringCellValue(); // Customer Location is in column B
-    dispatchData[i][2] = row.getCell(2).getStringCellValue(); // Customer Class is in column C
-}
+        // Create a 2D object array to store the dispatch data
+        Object[][] dispatchData = new Object[rowCount - 1][3];
 
-// Close the workbook
-workbook.close();
-return dispatchData;
-}
+        // Loop through each row and store the dispatch data in the object array
+        for (int i = 1; i < rowCount; i++) {
+            Row row = sheet.getRow(i);
+            dispatchData[i - 1][0] = row.getCell(0) != null ? row.getCell(0).getStringCellValue() : "";
+            dispatchData[i - 1][1] = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
+            dispatchData[i - 1][2] = row.getCell(2) != null ? row.getCell(2).getStringCellValue() : "";
+        }
+
+        // Close the workbook
+        workbook.close();
+        return dispatchData;
+    }
+
 }

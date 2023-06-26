@@ -4,21 +4,22 @@ import org.openqa.selenium.By;
 
 public class Dispatchlocators {
     // Declare all the hardcoded locators as private members
-    private By serviceButton = By.xpath("//a[@href='/service']");
-    private By dispatchButton = By.cssSelector("a[href='http://192.168.5.16:8081/#/dispatch/search']");
-    private By newDropdown = By.xpath("//div[@class='dropdown']//button[@data-toggle='dropdown']");
-    private By newDispatchButton = By.xpath("//a[@href='/dispatch/new']");
-    private By customerName = By.id("name");
-    private By customerLocation = By.id("location");
-    private By customerclass = By.id("service");
-    private By saveButton = By.xpath("//button[@type='submit']");
-    private By verifyingdispatchcreated = By.xpath("//span[text()='DSP: Ready for Dispatch']");
-    private By assignTechnician = By.xpath("//button[@class='btn btn-outline-secondary btn-technician']");
-    private By searchingPerson = By.xpath("//input[@placeholder='Search']");
-    private By selectingPerson = By.xpath("//div[@class='user-info']");
-    private By assignTechButton = By.xpath("//button[@class='btn btn-primary']");
-    private By verifyingAssignedTech = By.xpath("//div[text()='Technician:']//following-sibling::div");
-    private By finalAssignButton = By.xpath("//button[@class='btn btn-primary']");
+    private By serviceButton = By.id("dispatch_fjx_services");
+    private By dispatchButton = By.id("dispatch_fjx_dispatches");
+    // private By newDropdown = By.id("dispatch_fjx_dropdown");
+    private By newDropdown = By.cssSelector(".k-icon");
+    private By newDispatchButton = By.cssSelector(".k-item:nth-child(1)");
+    private By customerName = By.id("k-18eff997-9981-4256-b6d4-6b51ec161a80");
+    private By customerLocation = By.id("k-fef9ede0-c712-48eb-a4f9-929165452fbd");
+    private By customerclass = By.id("k-ef46a527-e96f-4d48-8202-756604ced643");
+    private By saveButton = By.id("dispatch_fjx_save");
+    private By verifyingdispatchcreated = By.xpath("//div[text()='DSP: Ready for Dispatch']");
+    private By assignTechnician = By.id("dispatch_fjx_assignlogo']");
+    private By searchingPerson = By.id("k-5f331564-1485-4d2f-9e1a-3d5bf339aa0d");
+    private By selectingPerson = By.id("b24fef59-5710-43ad-9782-6a6ccbcdf492-Brian Wright                                      ::795D236B-E8DD-4513-852D-231267F17DCC");
+    private By assignTechButton = By.id("//button[@class='btn btn-primary']");
+    private By verifyingAssignedTech = By.id("//div[text()='Technician:']//following-sibling::div");
+    private By finalAssignButton = By.id("//button[@class='btn btn-primary']");
 
     // Generate getters for all the locators
 
